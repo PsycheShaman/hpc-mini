@@ -166,7 +166,7 @@ model.add(Dense(64,activation="tanh"))
 model.add(Dense(32,activation="tanh"))
 model.add(Dense(2,activation="softmax"))
 
-adam = tensorflow.keras.optimizers.adam() 
+adam = tensorflow.keras.optimizers.Adam() 
 
 # Let's train the model using RMSprop
 model.compile(loss='binary_crossentropy',
