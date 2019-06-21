@@ -31,7 +31,8 @@ with open(y_files[0], 'rb') as y_file0:
 
 #with open(P_files[0], 'rb') as P_file0:
 #   P = pickle.load(P_file0)
-   
+
+x.shape = (x.shape[1],x.shape[2],x.shape[3])
 print("x.shape")
 print(x.shape)
    
@@ -41,6 +42,7 @@ for i in x_files[1:]:
     with open(i,'rb') as x_file:
         print(i)
         xi = pickle.load(x_file)
+        xi.shape = (xi.shape[1],xi.shape[2],xi.shape[3])
         print("xi.shape")
         print(xi.shape)
         x = np.concatenate((x,xi),axis=0)
@@ -86,6 +88,9 @@ y = np.delete(y,zeros)
 #x.shape = (x.shape[0],x.shape[1],x.shape[2],1)
 
 x.shape = (x.shape[0],x.shape[2],x.shape[1])
+
+print("x.shape after reshape for lstm")
+print(x.shape)
 
 #GeV_range2 = np.where(P>=1.8 and P<=2.2)
 #
