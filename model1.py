@@ -32,12 +32,17 @@ with open(y_files[0], 'rb') as y_file0:
 #with open(P_files[0], 'rb') as P_file0:
 #   P = pickle.load(P_file0)
    
+print("x.shape")
+print(x.shape)
+   
 print("recursively adding x pickles........................................................................................")
 
 for i in x_files[1:]:
     with open(i,'rb') as x_file:
         print(i)
         xi = pickle.load(x_file)
+        print("xi.shape")
+        print(xi.shape)
         x = np.concatenate((x,xi),axis=0)
         
 print("recursively adding y pickles........................................................................................")
