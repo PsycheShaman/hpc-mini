@@ -149,8 +149,11 @@ from tensorflow.keras.layers import Conv2D, MaxPooling2D, LSTM, Bidirectional, T
 
 model = Sequential()
 model.add(Bidirectional(LSTM(512,input_shape=(24,17),return_sequences=False),merge_mode='concat'))
+model.add(Dense(512,activation="tanh"))
 model.add(Dense(256,activation="tanh"))
-model.add(Dense(256,activation="tanh"))
+model.add(Dense(128,activation="tanh"))
+model.add(Dense(64,activation="tanh"))
+model.add(Dense(32,activation="tanh"))
 model.add(Dense(2,activation="softmax"))
 
 sgd = tensorflow.keras.optimizers.SGD(lr=0.01,momentum=0.9) 
