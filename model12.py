@@ -179,7 +179,7 @@ model.compile(loss='binary_crossentropy',
 
 batch_size=32
 
-epochs=50
+epochs=200
     
 history=model.fit(x_train, y_train,
               batch_size=batch_size,
