@@ -148,29 +148,36 @@ from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, LSTM, Bidirectional, TimeDistributed
 
 model = Sequential()
-model.add(Conv2D(32,(6,6),input_shape=(17,24,1),padding="same"))
-model.add(Conv2D(64,(6,6),padding="same"))
+model.add(Conv2D(32,(6,6),input_shape=(17,24,1),padding="same",activation="relu"))
+model.add(Conv2D(64,(6,6),padding="same",activation="relu"))
 model.add(MaxPooling2D((2,2)))
-model.add(Conv2D(64,(4,4),padding="same"))
-model.add(Conv2D(128,(4,4),padding="same"))
+model.add(Conv2D(64,(4,4),padding="same",activation="relu"))
+model.add(Conv2D(128,(4,4),padding="same",activation="relu"))
 model.add(MaxPooling2D((2,2)))
-model.add(Conv2D(128,(3,3),padding="same"))
-model.add(Conv2D(256,(3,3),padding="same"))
+model.add(Conv2D(128,(3,3),padding="same",activation="relu"))
+model.add(Conv2D(256,(3,3),padding="same",activation="relu"))
+model.add(MaxPooling2D((2,2)))
+model.add(Conv2D(256,(3,3),padding="same",activation="relu"))
+model.add(Conv2D(512,(3,3),padding="same",activation="relu"))
 model.add(MaxPooling2D((2,2)))
 model.add(Flatten())
-model.add(Dense(1024,activation="tanh"))
-model.add(Dense(512,activation="tanh"))
-model.add(Dense(256,activation="tanh"))
-model.add(Dense(128,activation="tanh"))
-model.add(Dense(64,activation="tanh"))
-model.add(Dense(32,activation="tanh"))
+model.add(Dense(1024,activation="relu"))
+model.add(Dense(1024,activation="relu"))
+model.add(Dense(512,activation="relu"))
+model.add(Dense(512,activation="relu"))
+model.add(Dense(256,activation="relu"))
+model.add(Dense(256,activation="relu"))
+model.add(Dense(128,activation="relu"))
+model.add(Dense(128,activation="relu"))
+model.add(Dense(64,activation="relu"))
+model.add(Dense(32,activation="relu"))
 model.add(Dense(2,activation="softmax"))
 
-sgd = tensorflow.keras.optimizers.SGD(lr=0.01,momentum=0.9) 
+adam = tensorflow.keras.optimizers.adam() 
 
 # Let's train the model using RMSprop
 model.compile(loss='binary_crossentropy',
-              optimizer=sgd,
+              optimizer=adam,
               metrics=['accuracy'])
 
 batch_size=32
@@ -193,7 +200,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('/home/vljchr004/hpc-mini/model6_history1.png', bbox_inches='tight')
+plt.savefig('/home/vljchr004/hpc-mini/model8_history1.png', bbox_inches='tight')
 # summarize history for loss
 
 plt.close()
@@ -205,16 +212,16 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('/home/vljchr004/hpc-mini/model6_history2.png', bbox_inches='tight')
+plt.savefig('/home/vljchr004/hpc-mini/model8_history2.png', bbox_inches='tight')
 
 model.probs = model.predict_proba(x_test)
 
 import numpy as np
-np.savetxt("/home/vljchr004/hpc-mini/model6_results.csv", np.array(model.probs), fmt="%s")
+np.savetxt("/home/vljchr004/hpc-mini/model8_results.csv", np.array(model.probs), fmt="%s")
 
-np.savetxt("/home/vljchr004/hpc-mini/model6_y_test.csv", np.array(y_test), fmt="%s")
+np.savetxt("/home/vljchr004/hpc-mini/model8_y_test.csv", np.array(y_test), fmt="%s")
 
-model.save('/home/vljchr004/hpc-mini/model6_.h5')  # creates a HDF5 file 'my_model.h5'
+model.save('/home/vljchr004/hpc-mini/model8_.h5')  # creates a HDF5 file 'my_model.h5'
 del model
 
 print("<-----------------------------done------------------------------------------>")

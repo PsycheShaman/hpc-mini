@@ -166,14 +166,14 @@ model.add(Dense(64,activation="tanh"))
 model.add(Dense(32,activation="tanh"))
 model.add(Dense(2,activation="softmax"))
 
-sgd = tensorflow.keras.optimizers.SGD(lr=0.01,momentum=0.9) 
+adam = tensorflow.keras.optimizers.adam() 
 
 # Let's train the model using RMSprop
 model.compile(loss='binary_crossentropy',
-              optimizer=sgd,
+              optimizer=adam,
               metrics=['accuracy'])
 
-batch_size=32
+batch_size=16
 
 epochs=50
     
@@ -193,7 +193,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('/home/vljchr004/hpc-mini/model6_history1.png', bbox_inches='tight')
+plt.savefig('/home/vljchr004/hpc-mini/model7_history1.png', bbox_inches='tight')
 # summarize history for loss
 
 plt.close()
@@ -205,16 +205,16 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('/home/vljchr004/hpc-mini/model6_history2.png', bbox_inches='tight')
+plt.savefig('/home/vljchr004/hpc-mini/model7_history2.png', bbox_inches='tight')
 
 model.probs = model.predict_proba(x_test)
 
 import numpy as np
-np.savetxt("/home/vljchr004/hpc-mini/model6_results.csv", np.array(model.probs), fmt="%s")
+np.savetxt("/home/vljchr004/hpc-mini/model7_results.csv", np.array(model.probs), fmt="%s")
 
-np.savetxt("/home/vljchr004/hpc-mini/model6_y_test.csv", np.array(y_test), fmt="%s")
+np.savetxt("/home/vljchr004/hpc-mini/model7_y_test.csv", np.array(y_test), fmt="%s")
 
-model.save('/home/vljchr004/hpc-mini/model6_.h5')  # creates a HDF5 file 'my_model.h5'
+model.save('/home/vljchr004/hpc-mini/model7_.h5')  # creates a HDF5 file 'my_model.h5'
 del model
 
 print("<-----------------------------done------------------------------------------>")
