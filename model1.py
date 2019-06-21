@@ -11,8 +11,8 @@ import numpy as np
 
 #P_files = glob.glob("C:/Users/gerhard/Documents/msc-thesis-data/P_*.pkl", recursive=True)
 
-x_files = glob.glob("/scratch/vljchr004/data/msc-thesis-data/cnn/x_*.pkl")
-y_files = glob.glob("/scratch/vljchr004/data/msc-thesis-data/cnn/y_*.pkl")
+x_files = glob.glob("/scratch/vljchr004/1_8_to_2_2_GeV/x_*.pkl")
+y_files = glob.glob("/scratch/vljchr004/1_8_to_2_2_GeV/y_*.pkl")
 
 #x_files = glob.glob("C:\\Users\\gerhard\\Documents\\msc-thesis-data\\cnn\\x_*.pkl")
 #y_files = glob.glob("C:\\Users\\gerhard\\Documents\\msc-thesis-data\\cnn\\y_*.pkl")
@@ -52,23 +52,23 @@ for i in y_files[1:]:
 #        Pi = pickle.load(P_file)
 #        P = np.concatenate((P,Pi),axis=None)
         
-x_files = glob.glob("/scratch/vljchr004/data/msc-thesis-data/cnn/x_*.npy")
-y_files = glob.glob("/scratch/vljchr004/data/msc-thesis-data/cnn/y_*.npy")
-       
-print("recursively adding x numpys........................................................................................")
-
-for i in x_files[0:]:
-    with open(i,'rb') as x_file:
-        print(i)
-        xi = np.load(x_file)
-        x = np.concatenate((x,xi),axis=0)
-
-print("recursively adding y numpys........................................................................................")
-
-for i in y_files[0:]:
-    with open(i,'rb') as y_file:
-        yi = np.load(y_file)
-        y = np.concatenate((y,yi),axis=None)
+#x_files = glob.glob("/scratch/vljchr004/data/msc-thesis-data/cnn/x_*.npy")
+#y_files = glob.glob("/scratch/vljchr004/data/msc-thesis-data/cnn/y_*.npy")
+#       
+#print("recursively adding x numpys........................................................................................")
+#
+#for i in x_files[0:]:
+#    with open(i,'rb') as x_file:
+#        print(i)
+#        xi = np.load(x_file)
+#        x = np.concatenate((x,xi),axis=0)
+#
+#print("recursively adding y numpys........................................................................................")
+#
+#for i in y_files[0:]:
+#    with open(i,'rb') as y_file:
+#        yi = np.load(y_file)
+#        y = np.concatenate((y,yi),axis=None)
         
 nz = np.array([np.count_nonzero(i) for i in x])
 
@@ -98,8 +98,8 @@ pions = pions[0]
 
 pions = pions[0:electrons.shape[0]]
 
-x_1 = x[electrons,:,:,:]
-x_2 = x[pions,:,:,:]
+x_1 = x[electrons,:,:]
+x_2 = x[pions,:,:]
 
 x = np.vstack((x_1,x_2))
 
@@ -112,9 +112,9 @@ ma = np.max(x)
 
 x = x/ma
 
-ma = np.amax(x,axis=2)
-
-x = np.divide(x,ma)
+#ma = np.amax(x,axis=2)
+#
+#x = np.divide(x,ma)
 
 #check the division above before running!!!!!!!!!!!1
 
@@ -172,7 +172,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('/home/vljchr004/msc-hpc/model1_history1.png', bbox_inches='tight')
+plt.savefig('/home/vljchr004/hpc-mini/model1_history1.png', bbox_inches='tight')
 # summarize history for loss
 
 plt.close()
@@ -184,16 +184,16 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('/home/vljchr004/msc-hpc/model1_history2.png', bbox_inches='tight')
+plt.savefig('/home/vljchr004/hpc-mini/model1_history2.png', bbox_inches='tight')
 
 model.probs = model.predict_proba(x_test)
 
 import numpy as np
-np.savetxt("/home/vljchr004/msc-hpc/model1_results.csv", np.array(model.probs), fmt="%s")
+np.savetxt("/home/vljchr004/hpc-mini/model1_results.csv", np.array(model.probs), fmt="%s")
 
-np.savetxt("/home/vljchr004/msc-hpc/model1_y_test.csv", np.array(y_test), fmt="%s")
+np.savetxt("/home/vljchr004/hpc-mini/model1_y_test.csv", np.array(y_test), fmt="%s")
 
-model.save('/home/vljchr004/msc-hpc/model1_.h5')  # creates a HDF5 file 'my_model.h5'
+model.save('/home/vljchr004/hpc-mini/model1_.h5')  # creates a HDF5 file 'my_model.h5'
 del model
 
 print("<-----------------------------done------------------------------------------>")
