@@ -148,10 +148,9 @@ from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, LSTM, Bidirectional, TimeDistributed
 
 model = Sequential()
-model.add(Bidirectional(LSTM(128,input_shape=(24,17),return_sequences=True),merge_mode='concat'))
-model.add(Bidirectional(LSTM(128,return_sequences=False),merge_mode='concat'))
-model.add(Dense(128,activation="tanh"))
-model.add(Dense(128,activation="tanh"))
+model.add(Bidirectional(LSTM(512,input_shape=(24,17),return_sequences=False),merge_mode='concat'))
+model.add(Dense(256,activation="tanh"))
+model.add(Dense(256,activation="tanh"))
 model.add(Dense(2,activation="softmax"))
 
 sgd = tensorflow.keras.optimizers.SGD(lr=0.01,momentum=0.9) 
@@ -181,7 +180,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('/home/vljchr004/hpc-mini/model2_history1.png', bbox_inches='tight')
+plt.savefig('/home/vljchr004/hpc-mini/model4_history1.png', bbox_inches='tight')
 # summarize history for loss
 
 plt.close()
@@ -193,16 +192,16 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('/home/vljchr004/hpc-mini/model2_history2.png', bbox_inches='tight')
+plt.savefig('/home/vljchr004/hpc-mini/model4_history2.png', bbox_inches='tight')
 
 model.probs = model.predict_proba(x_test)
 
 import numpy as np
-np.savetxt("/home/vljchr004/hpc-mini/model2_results.csv", np.array(model.probs), fmt="%s")
+np.savetxt("/home/vljchr004/hpc-mini/model4_results.csv", np.array(model.probs), fmt="%s")
 
-np.savetxt("/home/vljchr004/hpc-mini/model2_y_test.csv", np.array(y_test), fmt="%s")
+np.savetxt("/home/vljchr004/hpc-mini/model4_y_test.csv", np.array(y_test), fmt="%s")
 
-model.save('/home/vljchr004/hpc-mini/model2_.h5')  # creates a HDF5 file 'my_model.h5'
+model.save('/home/vljchr004/hpc-mini/model4_.h5')  # creates a HDF5 file 'my_model.h5'
 del model
 
 print("<-----------------------------done------------------------------------------>")

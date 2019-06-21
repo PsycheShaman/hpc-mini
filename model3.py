@@ -148,9 +148,9 @@ from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, LSTM, Bidirectional, TimeDistributed
 
 model = Sequential()
-model.add(Bidirectional(LSTM(256,input_shape=(24,17),return_sequences=True),merge_mode='concat'))
-model.add(Bidirectional(LSTM(256,return_sequences=True),merge_mode='concat'))
-model.add(TimeDistributed(Conv2D(32,(3,3),activation="tanh")))
+model.add(Bidirectional(LSTM(128,input_shape=(24,17),return_sequences=True),merge_mode='concat'))
+model.add(Bidirectional(LSTM(128,return_sequences=True),merge_mode='concat'))
+model.add(Conv2D(32,(3,3),activation="tanh"))
 model.add(MaxPooling2D(pool_size=(2,2)))
 model.add(Flatten())
 model.add(Dense(256,activation="tanh"))
