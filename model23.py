@@ -118,15 +118,15 @@ y_2 = y[pions]
 
 y = np.concatenate((y_1,y_2),axis=None)
 
+#ma = np.max(x)
+#
+#x = x/ma
+
 x=x.astype('float')
 
 for i in range(0,x.shape[0]):
     ma = np.max(x[i,:,:])
     x[i,:,:]=x[i,:,:]/ma
-
-#ma = np.max(x)
-#
-#x = x/ma
 
 #ma = np.amax(x,axis=2)
 #
@@ -154,42 +154,33 @@ from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, LSTM, Bidirectional, TimeDistributed
 
 model = Sequential()
-model.add(Conv2D(32,(4,4),input_shape=(17,24,1)))
+model.add(Conv2D(32,(4,4),input_shape=(17,24,1),activation="tanh"))
 model.add(MaxPooling2D((2,2)))
-model.add(Conv2D(64,(4,4)))
+model.add(Conv2D(64,(4,4),activation="tanh"))
 model.add(MaxPooling2D((2,2)))
-model.add(Conv2D(128,(2,2)))
 model.add(Flatten())
-model.add(Dense(512,activation="tanh"))
-model.add(Dropout(rate=0.05))
-model.add(Dense(512,activation="tanh"))
-model.add(Dropout(rate=0.05))
-model.add(Dense(256,activation="tanh"))
-model.add(Dropout(rate=0.05))
-model.add(Dense(256,activation="tanh"))
-model.add(Dropout(rate=0.05))
-model.add(Dense(128,activation="tanh"))
-model.add(Dropout(rate=0.05))
-model.add(Dense(128,activation="tanh"))
-model.add(Dropout(rate=0.05))
-model.add(Dense(64,activation="tanh"))
-model.add(Dropout(rate=0.04))
-model.add(Dense(64,activation="tanh"))
-model.add(Dropout(rate=0.03))
-model.add(Dense(32,activation="tanh"))
-model.add(Dropout(rate=0.02))
-model.add(Dense(32,activation="tanh"))
-model.add(Dropout(rate=0.01))
+model.add(Dense(1024,activation="tanh"))
+model.add(Dense(1024,activation="tanh"))
+model.add(Dense(512,activation="relu"))
+model.add(Dense(512,activation="relu"))
+model.add(Dense(256,activation="relu"))
+model.add(Dense(256,activation="relu"))
+model.add(Dense(256,activation="relu"))
+model.add(Dense(256,activation="relu"))
+model.add(Dense(128,activation="relu"))
+model.add(Dense(64,activation="relu"))
+model.add(Dense(64,activation="relu"))
+model.add(Dense(32,activation="relu"))
 model.add(Dense(2,activation="softmax"))
 
-sgd = tensorflow.keras.optimizers.SGD(lr=0.008,momentum=0.99) 
+sgd = tensorflow.keras.optimizers.SGD(lr=0.01,momentum=0.9) 
 
 # Let's train the model using RMSprop
 model.compile(loss='binary_crossentropy',
               optimizer=sgd,
               metrics=['accuracy'])
 
-batch_size=16
+batch_size=32
 
 epochs=50
     
@@ -209,7 +200,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('/home/vljchr004/hpc-mini/model19_history1.png', bbox_inches='tight')
+plt.savefig('/home/vljchr004/hpc-mini/model23_history1.png', bbox_inches='tight')
 # summarize history for loss
 
 plt.close()
@@ -221,16 +212,16 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('/home/vljchr004/hpc-mini/model19_history2.png', bbox_inches='tight')
+plt.savefig('/home/vljchr004/hpc-mini/model23_history2.png', bbox_inches='tight')
 
 model.probs = model.predict_proba(x_test)
 
 import numpy as np
-np.savetxt("/home/vljchr004/hpc-mini/model19_results.csv", np.array(model.probs), fmt="%s")
+np.savetxt("/home/vljchr004/hpc-mini/model23_results.csv", np.array(model.probs), fmt="%s")
 
-np.savetxt("/home/vljchr004/hpc-mini/model19_y_test.csv", np.array(y_test), fmt="%s")
+np.savetxt("/home/vljchr004/hpc-mini/model23_y_test.csv", np.array(y_test), fmt="%s")
 
-model.save('/home/vljchr004/hpc-mini/model19_.h5')  # creates a HDF5 file 'my_model.h5'
+model.save('/home/vljchr004/hpc-mini/model23.h5')  # creates a HDF5 file 'my_model.h5'
 del model
 
 print("<-----------------------------done------------------------------------------>")

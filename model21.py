@@ -118,9 +118,15 @@ y_2 = y[pions]
 
 y = np.concatenate((y_1,y_2),axis=None)
 
-ma = np.max(x)
+#ma = np.max(x)
+#
+#x = x/ma
 
-x = x/ma
+x=x.astype('float')
+
+for i in range(0,x.shape[0]):
+    ma = np.max(x[i,:,:])
+    x[i,:,:]=x[i,:,:]/ma
 
 #ma = np.amax(x,axis=2)
 #
