@@ -10,11 +10,11 @@ import glob
 import numpy as np
 
 #P_files = glob.glob("C:/Users/gerhard/Documents/msc-thesis-data/P_*.pkl", recursive=True)
-x_files = glob.glob("C:/Users/gerhard/Documents/msc-thesis-data/1_8_to_2_2_GeV/x_*.pkl", recursive=True)
-y_files = glob.glob("C:/Users/gerhard/Documents/msc-thesis-data/1_8_to_2_2_GeV/y_*.pkl", recursive=True)
+#x_files = glob.glob("C:/Users/gerhard/Documents/msc-thesis-data/1_8_to_2_2_GeV/x_*.pkl", recursive=True)
+#y_files = glob.glob("C:/Users/gerhard/Documents/msc-thesis-data/1_8_to_2_2_GeV/y_*.pkl", recursive=True)
 #
-#x_files = glob.glob("/scratch/vljchr004/1_8_to_2_2_GeV/x_*.pkl")
-#y_files = glob.glob("/scratch/vljchr004/1_8_to_2_2_GeV/y_*.pkl")
+x_files = glob.glob("/scratch/vljchr004/1_8_to_2_2_GeV/x_*.pkl")
+y_files = glob.glob("/scratch/vljchr004/1_8_to_2_2_GeV/y_*.pkl")
 
 #x_files = glob.glob("C:\\Users\\gerhard\\Documents\\msc-thesis-data\\cnn\\x_*.pkl")
 #y_files = glob.glob("C:\\Users\\gerhard\\Documents\\msc-thesis-data\\cnn\\y_*.pkl")
