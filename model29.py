@@ -155,11 +155,12 @@ from tensorflow.keras.layers import Conv2D, MaxPooling2D, LSTM, Bidirectional, T
 
 model = Sequential()
 model.add(LSTM(512,input_shape=(24,17),return_sequences=True))
-model.add(LSTM(512,go_backwards=True,return_sequences=False))
-model.add(Dense(512,activation="relu"))
-model.add(Dense(512,activation="relu"))
+model.add(LSTM(512,go_backwards=True,return_sequences=True))
+model.add(LSTM(256,go_backwards=False,return_sequences=True))
+model.add(LSTM(256,go_backwards=True,return_sequences=False))
 model.add(Dense(256,activation="relu"))
 model.add(Dense(256,activation="relu"))
+model.add(Dense(128,activation="relu"))
 model.add(Dense(128,activation="relu"))
 model.add(Dense(64,activation="relu"))
 model.add(Dense(32,activation="relu"))
@@ -173,7 +174,7 @@ model.compile(loss='binary_crossentropy',
               optimizer=sgd,
               metrics=['accuracy'])
 
-batch_size=32
+batch_size=16
 
 epochs=50
     
@@ -193,7 +194,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('/home/vljchr004/hpc-mini/model27_history1.png', bbox_inches='tight')
+plt.savefig('/home/vljchr004/hpc-mini/model29_history1.png', bbox_inches='tight')
 # summarize history for loss
 
 plt.close()
@@ -205,16 +206,16 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('/home/vljchr004/hpc-mini/model27_history2.png', bbox_inches='tight')
+plt.savefig('/home/vljchr004/hpc-mini/model29_history2.png', bbox_inches='tight')
 
 model.probs = model.predict_proba(x_test)
 
 import numpy as np
-np.savetxt("/home/vljchr004/hpc-mini/model27_results.csv", np.array(model.probs), fmt="%s")
+np.savetxt("/home/vljchr004/hpc-mini/model29_results.csv", np.array(model.probs), fmt="%s")
 
-np.savetxt("/home/vljchr004/hpc-mini/model27_y_test.csv", np.array(y_test), fmt="%s")
+np.savetxt("/home/vljchr004/hpc-mini/model29_y_test.csv", np.array(y_test), fmt="%s")
 
-model.save('/home/vljchr004/hpc-mini/model27_.h5')  # creates a HDF5 file 'my_model.h5'
+model.save('/home/vljchr004/hpc-mini/model29_.h5')  # creates a HDF5 file 'my_model.h5'
 del model
 
 print("<-----------------------------done------------------------------------------>")

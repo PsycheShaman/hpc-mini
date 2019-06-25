@@ -163,14 +163,14 @@ model.add(Dense(256,activation="relu"))
 model.add(Dense(256,activation="relu"))
 model.add(Dense(2,activation="softmax"))
 
-sgd = tensorflow.keras.optimizers.SGD(lr=0.0001,momentum=0.9) 
+sgd = tensorflow.keras.optimizers.SGD(momentum=0.9) 
 
 # Let's train the model using RMSprop
 model.compile(loss='binary_crossentropy',
               optimizer=sgd,
               metrics=['accuracy'])
 
-batch_size=100
+batch_size=32
 
 epochs=50
     
