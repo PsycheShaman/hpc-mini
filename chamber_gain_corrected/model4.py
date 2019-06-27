@@ -39,11 +39,11 @@ history=model.fit(train, labels,
               validation_split=0.2,
               shuffle=True)
 
-unit = model.get_weights()[0]
-
-unit = model.get_weights()[0][:,:,0,0]
-
-plt.imshow(unit)
+#unit = model.get_weights()[0]
+#
+#unit = model.get_weights()[0][:,:,0,0]
+#
+#plt.imshow(unit)
 
 plt.plot(history.history['acc'])
 plt.plot(history.history['val_acc'])
