@@ -44,4 +44,4 @@ module load software/TensorFlow-CPU-py3
 
 # Your science stuff goes here...
 
-python -u /home/vljchr004/hpc-mini/chamber_gain_corrected/model1.py > out_model1.txt
+python -u /home/vljchr004/hpc-mini/chamber_gain_corrected/model21.py > out_model21.txt
