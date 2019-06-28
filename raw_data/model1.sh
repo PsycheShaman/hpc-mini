@@ -44,4 +44,4 @@ module load software/TensorFlow-CPU-py3
 
 # Your science stuff goes here...
 
-python -u /home/vljchr004/hpc-mini/raw_data/model1.py > out_model1.txt
+python -u /home/vljchr004/hpc-mini/raw_data/model5.py > out_model5.txt
