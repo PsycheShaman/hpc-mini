@@ -30,7 +30,7 @@ x.shape = (x.shape[0],x.shape[1],1)
 import tensorflow as tf
 
 model = tf.keras.Sequential()
-model.add(tf.keras.layers.LSTM(1000,return_sequences=False))
+model.add(tf.keras.layers.LSTM(1000,return_sequences=False,input_shape=(24,17)))
 model.add(tf.keras.layers.Dense(1000,activation="tanh"))
 model.add(tf.keras.layers.Dense(1,activation="sigmoid"))
 

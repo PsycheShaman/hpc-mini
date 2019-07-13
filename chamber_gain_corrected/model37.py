@@ -20,7 +20,7 @@ train = train/ma
 import tensorflow as tf
 
 model = tf.keras.Sequential()
-model.add(tf.keras.layers.LSTM(256,return_sequences=True,go_backwards=False))
+model.add(tf.keras.layers.LSTM(256,return_sequences=True,go_backwards=False,input_shape=(24,17)))
 model.add(tf.keras.layers.LSTM(256,return_sequences=True,go_backwards=True))
 model.add(tf.keras.layers.LSTM(256,return_sequences=True,go_backwards=False))
 model.add(tf.keras.layers.LSTM(256,return_sequences=True,go_backwards=True))
