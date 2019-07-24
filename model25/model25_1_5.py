@@ -59,7 +59,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('/home/vljchr004/hpc-mini/chamber_gain_corrected/model25_1_history1.png', bbox_inches='tight')
+plt.savefig('/home/vljchr004/hpc-mini/chamber_gain_corrected/model25_1_5_history1.png', bbox_inches='tight')
 plt.close()
 
 
@@ -69,18 +69,18 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('/home/vljchr004/hpc-mini/chamber_gain_corrected/model25_1_history2.png', bbox_inches='tight')
+plt.savefig('/home/vljchr004/hpc-mini/chamber_gain_corrected/model25_1_5_history2.png', bbox_inches='tight')
 
 plt.close()
 
 model.probs = model.predict_proba(train)
 
 import numpy as np
-np.savetxt("/home/vljchr004/hpc-mini/chamber_gain_corrected/model25_1_results.csv", np.array(model.probs), fmt="%s")
+np.savetxt("/home/vljchr004/hpc-mini/chamber_gain_corrected/model25_1_5_results.csv", np.array(model.probs), fmt="%s")
 
-np.savetxt("/home/vljchr004/hpc-mini/chamber_gain_corrected/model25_1_y_test.csv", np.array(labels), fmt="%s")
+np.savetxt("/home/vljchr004/hpc-mini/chamber_gain_corrected/model25_1_5_y_test.csv", np.array(labels), fmt="%s")
 print("saving model")
-model.save('/home/vljchr004/hpc-mini/chamber_gain_corrected/model25_1.h5')  # creates a HDF5 file 'my_model.h5'
+model.save('/home/vljchr004/hpc-mini/chamber_gain_corrected/model25_1_5.h5')  # creates a HDF5 file 'my_model.h5'
 print("model saved")
 
 print("<-----------------------------done------------------------------------------>")
