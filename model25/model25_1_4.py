@@ -18,6 +18,7 @@ import tensorflow as tf
 model = tf.keras.Sequential()
 
 model.add(tf.keras.layers.Conv2DTranspose(filters=16,kernel_size=(3,5),strides=1, padding='valid',activation="relu",input_shape=(17,24,1)))
+model.add(tf.keras.layers.MaxPool2D())
 model.add(tf.keras.layers.Conv2D(filters=32,kernel_size=(3,5),strides=1, padding='valid',activation="relu"))
 model.add(tf.keras.layers.MaxPool2D())
 model.add(tf.keras.layers.Flatten())
