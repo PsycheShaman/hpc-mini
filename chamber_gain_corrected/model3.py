@@ -20,7 +20,7 @@ model.add(tf.keras.layers.Dense(64,activation="sigmoid"))
 model.add(tf.keras.layers.Dense(32,activation="sigmoid"))
 model.add(tf.keras.layers.Dense(1,activation="sigmoid"))
 
-adam = tf.train.AdamOptimizer(learning_rate=0.00001) 
+adam = tf.train.AdamOptimizer(learning_rate=0.00001)
 
 model.compile(loss='binary_crossentropy',
               optimizer=adam,
@@ -29,7 +29,7 @@ model.compile(loss='binary_crossentropy',
 batch_size=32
 
 epochs=50
-    
+
 history=model.fit(train, labels,
               batch_size=batch_size,
               epochs=epochs,
@@ -62,28 +62,14 @@ plt.savefig('/home/vljchr004/hpc-mini/chamber_gain_corrected/model3_history2.png
 
 plt.close()
 
+model.probs = model.predict_proba(train)
+
+import numpy as np
+np.savetxt("/home/vljchr004/hpc-mini/chamber_gain_corrected/model3_results.csv", np.array(model.probs), fmt="%s")
+
+np.savetxt("/home/vljchr004/hpc-mini/chamber_gain_corrected/model3_y_test.csv", np.array(y_test), fmt="%s")
+
 model.save('/home/vljchr004/hpc-mini/chamber_gain_corrected/model3_.h5')
 del model
 
 print("<-----------------------------done------------------------------------------>")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
