@@ -21,6 +21,8 @@ model.add(tf.keras.layers.Conv2DTranspose(filters=16,kernel_size=(3,5),strides=1
 model.add(tf.keras.layers.Conv2D(filters=32,kernel_size=(3,5),strides=1, padding='valid',activation="relu"))
 model.add(tf.keras.layers.MaxPool2D())
 model.add(tf.keras.layers.Flatten())
+model.add(tf.keras.layers.Dense(1024,activation="sigmoid"))
+model.add(tf.keras.layers.Dropout(rate=0.2))
 model.add(tf.keras.layers.Dense(512,activation="sigmoid"))
 model.add(tf.keras.layers.Dropout(rate=0.2))
 model.add(tf.keras.layers.Dense(256,activation="sigmoid"))

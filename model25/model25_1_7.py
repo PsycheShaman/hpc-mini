@@ -29,13 +29,13 @@ model.add(tf.keras.layers.Dense(128,activation="sigmoid"))
 model.add(tf.keras.layers.Dropout(rate=0.2))
 model.add(tf.keras.layers.Dense(1,activation="sigmoid"))
 
-adam = tf.train.AdamOptimizer(learning_rate=0.00001)
+adam = tf.train.AdamOptimizer(learning_rate=0.0000001)
 
 model.compile(loss='binary_crossentropy',
               optimizer=adam,
               metrics=['accuracy'])
 
-batch_size=32
+batch_size=16
 
 epochs=100
 
