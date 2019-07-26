@@ -33,7 +33,7 @@ model.add(tf.keras.layers.Dense(256,activation="tanh"))
 model.add(tf.keras.layers.Dropout(rate=0.5))
 model.add(tf.keras.layers.Dense(1,activation="sigmoid"))
 
-adam = tf.train.AdamOptimizer(learning_rate=0.00001) 
+adam = tf.train.AdamOptimizer(learning_rate=0.00001)
 
 model.compile(loss='binary_crossentropy',
               optimizer=adam,
@@ -41,8 +41,8 @@ model.compile(loss='binary_crossentropy',
 
 batch_size=32
 
-epochs=100
-    
+epochs=50
+
 history=model.fit(train, labels,
               batch_size=batch_size,
               epochs=epochs,
@@ -86,24 +86,3 @@ model.save('/home/vljchr004/hpc-mini/chamber_gain_corrected/model37_.h5')  # cre
 del model
 
 print("<-----------------------------done------------------------------------------>")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

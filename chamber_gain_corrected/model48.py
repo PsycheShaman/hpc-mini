@@ -22,7 +22,7 @@ x  = []
 for i in range(0,train.shape[0]):
     xi = train[i,:,:].sum(axis=0)
     x.append(xi)
-    
+
 x = np.array(x)
 
 x.shape = (x.shape[0],x.shape[1])
@@ -31,21 +31,21 @@ mu = []
 
 for i in range(0,x.shape[0]):
     mu.append(np.mean(x[i,:]))
-    
+
 mu = np.array(mu)
 
 sd = []
 
 for i in range(0,x.shape[0]):
     sd.append(np.std(x[i,:]))
-    
+
 sd = np.array(sd)
 
 l2 = []
 
 for i in range(0,x.shape[0]):
     l2.append(np.linalg.norm(x[i,:],2))
-    
+
 l2 = np.array(l2)
 
 
@@ -53,35 +53,35 @@ ma = []
 
 for i in range(0,x.shape[0]):
     ma.append(np.max(x[i,:]))
-    
+
 ma = np.array(ma)
 
 gr1 = []
 
 for i in range(0,x.shape[0]):
     gr1.append(np.sum(x[i,0:5]))
-    
+
 gr1 = np.array(gr1)
 
 gr2 = []
 
 for i in range(0,x.shape[0]):
     gr2.append(np.sum(x[i,6:11]))
-    
+
 gr2 = np.array(gr2)
 
 gr3 = []
 
 for i in range(0,x.shape[0]):
     gr3.append(np.sum(x[i,12:17]))
-    
+
 gr3 = np.array(gr3)
 
 gr4 = []
 
 for i in range(0,x.shape[0]):
     gr4.append(np.sum(x[i,18:23]))
-    
+
 gr4 = np.array(gr4)
 
 diff1 = gr2-gr1
@@ -123,7 +123,7 @@ model.add(tf.keras.layers.Dense(64,activation="sigmoid"))
 model.add(tf.keras.layers.Dropout(rate=0.5))
 model.add(tf.keras.layers.Dense(1,activation="sigmoid"))
 
-adam = tf.train.AdamOptimizer(learning_rate=0.00001) 
+adam = tf.train.AdamOptimizer(learning_rate=0.00001)
 
 model.compile(loss='binary_crossentropy',
               optimizer=adam,
@@ -132,7 +132,7 @@ model.compile(loss='binary_crossentropy',
 batch_size=32
 
 epochs=100
-    
+
 history=model.fit(x, y,
               batch_size=batch_size,
               epochs=epochs,
@@ -165,7 +165,7 @@ plt.savefig('/home/vljchr004/hpc-mini/chamber_gain_corrected/model48_history2.pn
 
 plt.close()
 
-model.probs = model.predict_proba(train)
+model.probs = model.predict_proba(x)
 
 import numpy as np
 np.savetxt("/home/vljchr004/hpc-mini/chamber_gain_corrected/model48_results.csv", np.array(model.probs), fmt="%s")
@@ -176,24 +176,3 @@ model.save('/home/vljchr004/hpc-mini/chamber_gain_corrected/model48_.h5')  # cre
 del model
 
 print("<-----------------------------done------------------------------------------>")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

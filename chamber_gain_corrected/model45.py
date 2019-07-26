@@ -22,7 +22,7 @@ x  = []
 for i in range(0,train.shape[0]):
     xi = train[i,:,:].sum(axis=0)
     x.append(xi)
-    
+
 x = np.array(x)
 
 x.shape = (x.shape[0],x.shape[1],1)
@@ -41,7 +41,7 @@ model.add(tf.keras.layers.Dense(128,activation="tanh"))
 model.add(tf.keras.layers.Dense(64,activation="tanh"))
 model.add(tf.keras.layers.Dense(1,activation="sigmoid"))
 
-adam = tf.train.AdamOptimizer(learning_rate=0.00001) 
+adam = tf.train.AdamOptimizer(learning_rate=0.00001)
 
 model.compile(loss='binary_crossentropy',
               optimizer=adam,
@@ -50,7 +50,7 @@ model.compile(loss='binary_crossentropy',
 batch_size=32
 
 epochs=100
-    
+
 history=model.fit(x, labels,
               batch_size=batch_size,
               epochs=epochs,
@@ -83,7 +83,7 @@ plt.savefig('/home/vljchr004/hpc-mini/chamber_gain_corrected/model45_history2.pn
 
 plt.close()
 
-model.probs = model.predict_proba(train)
+model.probs = model.predict_proba(x)
 
 import numpy as np
 np.savetxt("/home/vljchr004/hpc-mini/chamber_gain_corrected/model45_results.csv", np.array(model.probs), fmt="%s")
@@ -94,24 +94,3 @@ model.save('/home/vljchr004/hpc-mini/chamber_gain_corrected/model45_.h5')  # cre
 del model
 
 print("<-----------------------------done------------------------------------------>")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
