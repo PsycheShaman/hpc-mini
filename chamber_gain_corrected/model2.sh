@@ -9,7 +9,7 @@
 #SBATCH --partition=ada
 
 # The line below means you need 1 worker node and a total of 2 cores
-#SBATCH --nodes=1 --ntasks=16
+#SBATCH --nodes=1 --ntasks=40
 
 # The line below indicates the wall time your job will need, 10 hours for example. NB, this is a mandatory directive!
 #SBATCH --time=70:00:00
@@ -44,4 +44,4 @@ module load software/TensorFlow-CPU-py3
 
 # Your science stuff goes here...
 
-python -u /home/vljchr004/hpc-mini/chamber_gain_corrected/model5.py > out_model5.txt
+python -u /home/vljchr004/hpc-mini/chamber_gain_corrected/model48.py > out_model48.txt
