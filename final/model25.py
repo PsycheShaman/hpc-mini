@@ -9,15 +9,17 @@ train = tracks.reshape((-1, 17, 24, 1))
 
 labels = np.repeat(infosets[:, 0], 6)
 
-ma = np.max(train)
+train = (train-np.max(train))/np.max(train)
 
-train = train/ma
+from sklearn.model_selection import train_test_split
+
+x_train, x_test, y_train, y_test = train_test_split(train, labels, test_size=0.33, random_state=42)
 
 import tensorflow as tf
 
 model = tf.keras.Sequential()
 
-model.add(tf.keras.layers.Conv2D(filters=16,kernel_size=(3,3),strides=1, padding='valid',activation="relu"))
+model.add(tf.keras.layers.Conv2D(filters=16,kernel_size=(3,3),strides=1, padding='valid',activation="relu",input_shape=(17,24,1)))
 model.add(tf.keras.layers.Conv2D(filters=32,kernel_size=(3,3),strides=1, padding='valid',activation="relu"))
 model.add(tf.keras.layers.MaxPool2D())
 model.add(tf.keras.layers.Flatten())
@@ -39,7 +41,7 @@ batch_size=32
 
 epochs=100
 
-history=model.fit(train, labels,
+history=model.fit(x_train, y_train,
               batch_size=batch_size,
               epochs=epochs,
               validation_split=0.2,
@@ -57,7 +59,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('C:/Users/gerhard/Documents/hpc-mini/chamber_gain_corrected/model25_history1.png', bbox_inches='tight')
+plt.savefig('C:/Users/gerhard/Documents/hpc-mini/final/model25_history1.png', bbox_inches='tight')
 plt.close()
 
 
@@ -67,18 +69,18 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('C:/Users/gerhard/Documents/chamber_gain_corrected/model25_history2.png', bbox_inches='tight')
+plt.savefig('C:/Users/gerhard/Documents/final/model25_history2.png', bbox_inches='tight')
 
 plt.close()
 
-model.probs = model.predict_proba(train)
+model.probs = model.predict_proba(x_train)
 
 import numpy as np
-np.savetxt("C:/Users/gerhard/Documents/hpc-mini/chamber_gain_corrected/model25_results.csv", np.array(model.probs), fmt="%s")
+np.savetxt("C:/Users/gerhard/Documents/hpc-mini/final/model25_results.csv", np.array(model.probs), fmt="%s")
 
-np.savetxt("C:/Users/gerhard/Documents/hpc-mini/chamber_gain_corrected/model25_y_test.csv", np.array(labels), fmt="%s")
+np.savetxt("C:/Users/gerhard/Documents/hpc-mini/final/model25_y_test.csv", np.array(y_train), fmt="%s")
 
-model.save('C:/Users/gerhard/Documents/hpc-mini/chamber_gain_corrected/model25_.h5')  # creates a HDF5 file 'my_model.h5'
+model.save('C:/Users/gerhard/Documents/hpc-mini/final/model25_.h5')  # creates a HDF5 file 'my_model.h5'
 del model
 
 print("<-----------------------------done------------------------------------------>")
