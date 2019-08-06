@@ -13,16 +13,16 @@ import numpy as np
 
 def load_data():
         tracks = np.load("/scratch/vljchr004/6_tracklets_large_calib_train/0_tracks.npy")
-    
+
         infosets = np.load("/scratch/vljchr004/6_tracklets_large_calib_train/0_info_set.npy")
-    
+
         x = tracks.reshape((-1, 17,24,1))
-        
+
 #        x = tracks
-    
+
         y = np.repeat(infosets[:, 0], 6)
         return (x,y)
-    
+
 (x,y) = load_data()
 
 x = (x-np.max(x))/np.max(x)
@@ -52,16 +52,16 @@ flatten_X_test = flatten_X_test.reshape((-1,17*24))
 
 def collapse(x):
     newx  = []
-    
+
     for i in range(0,x.shape[0]):
         xi = x[i,:,:].sum(axis=0)
         newx.append(xi)
-    
+
     newx = np.array(newx)
-    
+
     newx.shape = (newx.shape[0],newx.shape[1],1)
     return newx
-    
+
 collapse_X_train = collapse(collapse_X_train)
 collapse_X_test = collapse(collapse_X_test)
 
@@ -122,9 +122,27 @@ model = Model(inputs=[a,b,c,d],outputs=out)
 
 model.compile(optimizer=Adam(lr=0.0000001),loss='binary_crossentropy',metrics=['accuracy'])
 
-model.fit([X_train,LSTM_X_train,collapse_X_train,flatten_X_train],y_train,epochs=100,batch_size=32,validation_split=0.25,shuffle=True)
+history=model.fit([X_train,LSTM_X_train,collapse_X_train,flatten_X_train],y_train,epochs=100,batch_size=32,validation_split=0.25,shuffle=True)
 
-#validation accuracy after 20 epochs = 0.7076
+plt.plot(history.history['acc'])
+plt.plot(history.history['val_acc'])
+plt.title('model accuracy')
+plt.ylabel('accuracy')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='upper left')
+plt.savefig('/home/vljchr004/hpc-mini/merged-models/model2_history1.png', bbox_inches='tight')
+plt.close()
+
+
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='upper left')
+plt.savefig('/home/vljchr004/hpc-mini/chamber_gain_corrected/model2_history2.png', bbox_inches='tight')
+
+plt.close()
 
 
 model.probs = model.predict([X_test,LSTM_X_test,collapse_X_test,flatten_X_test])
@@ -133,10 +151,3 @@ model.probs = model.predict([X_test,LSTM_X_test,collapse_X_test,flatten_X_test])
 np.savetxt("/home/vljchr004/hpc-mini/merged-models/merging2_results.csv", np.array(model.probs), fmt="%s")
 
 np.savetxt("/home/vljchr004/hpc-mini/merged-models/merging2_y_test.csv", np.array(y_test), fmt="%s")
-
-
-
-
-
-
-

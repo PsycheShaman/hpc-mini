@@ -9,26 +9,24 @@ train = tracks.reshape((-1, 17, 24, 1))
 
 labels = np.repeat(infosets[:, 0], 6)
 
-train = (train-np.max(train))/np.max(train)
+ma = np.max(train)
 
-from sklearn.model_selection import train_test_split
-
-x_train, x_test, y_train, y_test = train_test_split(train, labels, test_size=0.33, random_state=42)
+train = train/ma
 
 import tensorflow as tf
 
 model = tf.keras.Sequential()
-model.add(tf.keras.layers.Conv2D(filters=16,kernel_size=(17,24),strides=1, padding='valid',activation="relu",input_shape=(17,24,1)))
+
+model.add(tf.keras.layers.Conv2DTranspose(filters=16,kernel_size=(3,5),strides=1, padding='valid',activation="relu",input_shape=(17,24,1)))
+model.add(tf.keras.layers.Conv2D(filters=32,kernel_size=(3,5),strides=1, padding='valid',activation="relu"))
+model.add(tf.keras.layers.MaxPool2D())
 model.add(tf.keras.layers.Flatten())
-#model.add(tf.keras.layers.DropOut(rate=0.5))
+model.add(tf.keras.layers.Dense(512,activation="sigmoid"))
+model.add(tf.keras.layers.Dropout(rate=0.2))
 model.add(tf.keras.layers.Dense(256,activation="sigmoid"))
-#model.add(tf.keras.layers.DropOut(rate=0.5))
+model.add(tf.keras.layers.Dropout(rate=0.2))
 model.add(tf.keras.layers.Dense(128,activation="sigmoid"))
-#model.add(tf.keras.layers.DropOut(rate=0.5))
-model.add(tf.keras.layers.Dense(64,activation="sigmoid"))
-#model.add(tf.keras.layers.DropOut(rate=0.5))
-model.add(tf.keras.layers.Dense(32,activation="sigmoid"))
-#model.add(tf.keras.layers.DropOut(rate=0.5))
+model.add(tf.keras.layers.Dropout(rate=0.2))
 model.add(tf.keras.layers.Dense(1,activation="sigmoid"))
 
 adam = tf.train.AdamOptimizer(learning_rate=0.00001)
@@ -41,12 +39,12 @@ batch_size=32
 
 epochs=100
 
-history=model.fit(x_train, y_train,
+history=model.fit(train, labels,
               batch_size=batch_size,
               epochs=epochs,
               validation_split=0.2,
               shuffle=True)
-#
+
 #unit = model.get_weights()[0]
 #
 #unit = model.get_weights()[0][:,:,0,0]
@@ -59,7 +57,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('/home/vljchr004/hpc-mini/final/model3_history1.png', bbox_inches='tight')
+plt.savefig('/home/vljchr004/hpc-mini/chamber_gain_corrected/model25_1_history1.png', bbox_inches='tight')
 plt.close()
 
 
@@ -69,18 +67,18 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('/home/vljchr004/hpc-mini/final/model3_history2.png', bbox_inches='tight')
+plt.savefig('/home/vljchr004/hpc-mini/chamber_gain_corrected/model25_1_history2.png', bbox_inches='tight')
 
 plt.close()
 
-model.probs = model.predict_proba(x_test)
+model.probs = model.predict_proba(train)
 
 import numpy as np
-np.savetxt("/home/vljchr004/hpc-mini/final/model3_results.csv", np.array(model.probs), fmt="%s")
+np.savetxt("/home/vljchr004/hpc-mini/chamber_gain_corrected/model25_1_results.csv", np.array(model.probs), fmt="%s")
 
-np.savetxt("/home/vljchr004/hpc-mini/final/model3_y_test.csv", np.array(y_test), fmt="%s")
-
-model.save('/home/vljchr004/hpc-mini/final/model3_.h5')
-del model
+np.savetxt("/home/vljchr004/hpc-mini/chamber_gain_corrected/model25_1_y_test.csv", np.array(labels), fmt="%s")
+print("saving model")
+model.save('/home/vljchr004/hpc-mini/chamber_gain_corrected/model25_1.h5')  # creates a HDF5 file 'my_model.h5'
+print("model saved")
 
 print("<-----------------------------done------------------------------------------>")
