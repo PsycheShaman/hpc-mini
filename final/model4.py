@@ -19,22 +19,22 @@ import tensorflow as tf
 
 model = tf.keras.Sequential()
 model.add(tf.keras.layers.Conv2D(filters=16,kernel_size=(8,12),strides=1, padding='valid',activation="relu",input_shape=(17,24,1)))
-model.add(tf.keras.layers.DropOut(rate=0.2))
+#model.add(tf.keras.layers.DropOut(rate=0.2))
 model.add(tf.keras.layers.Conv2D(filters=32,kernel_size=(5,6),strides=1, padding='valid',activation="relu"))
-model.add(tf.keras.layers.DropOut(rate=0.2))
+#model.add(tf.keras.layers.DropOut(rate=0.2))
 model.add(tf.keras.layers.Conv2D(filters=64,kernel_size=(3,4),strides=1, padding='valid',activation="relu"))
-model.add(tf.keras.layers.DropOut(rate=0.2))
+#model.add(tf.keras.layers.DropOut(rate=0.2))
 model.add(tf.keras.layers.Conv2D(filters=128,kernel_size=(2,3),strides=1, padding='valid',activation="relu"))
 model.add(tf.keras.layers.Flatten())
-model.add(tf.keras.layers.DropOut(rate=0.5))
+#model.add(tf.keras.layers.DropOut(rate=0.5))
 model.add(tf.keras.layers.Dense(512,activation="sigmoid"))
-model.add(tf.keras.layers.DropOut(rate=0.5))
+#model.add(tf.keras.layers.DropOut(rate=0.5))
 model.add(tf.keras.layers.Dense(256,activation="sigmoid"))
-model.add(tf.keras.layers.DropOut(rate=0.5))
+#model.add(tf.keras.layers.DropOut(rate=0.5))
 model.add(tf.keras.layers.Dense(128,activation="sigmoid"))
-model.add(tf.keras.layers.DropOut(rate=0.5))
+#model.add(tf.keras.layers.DropOut(rate=0.5))
 model.add(tf.keras.layers.Dense(64,activation="sigmoid"))
-model.add(tf.keras.layers.DropOut(rate=0.5))
+#model.add(tf.keras.layers.DropOut(rate=0.5))
 model.add(tf.keras.layers.Dense(1,activation="sigmoid"))
 
 adam = tf.train.AdamOptimizer(learning_rate=0.00001)
@@ -45,7 +45,7 @@ model.compile(loss='binary_crossentropy',
 
 batch_size=32
 
-epochs=50
+epochs=100
 
 history=model.fit(x_train, y_train,
               batch_size=batch_size,
