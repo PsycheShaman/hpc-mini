@@ -9,11 +9,9 @@ train = tracks.reshape((-1, 17, 24, 1))
 
 labels = np.repeat(infosets[:, 0], 6)
 
-train = (train-np.max(train))/np.max(train)
+ma = np.max(train)
 
-from sklearn.model_selection import train_test_split
-
-x_train, x_test, y_train, y_test = train_test_split(train, labels, test_size=0.33, random_state=42)
+train = train/ma
 
 import tensorflow as tf
 
@@ -31,7 +29,7 @@ model.add(tf.keras.layers.Dense(128,activation="sigmoid"))
 model.add(tf.keras.layers.Dropout(rate=0.2))
 model.add(tf.keras.layers.Dense(1,activation="sigmoid"))
 
-adam = tf.train.AdamOptimizer(learning_rate=0.00001)
+adam = tf.train.AdamOptimizer(learning_rate=0.000001) 
 
 model.compile(loss='binary_crossentropy',
               optimizer=adam,
@@ -40,8 +38,8 @@ model.compile(loss='binary_crossentropy',
 batch_size=32
 
 epochs=100
-
-history=model.fit(x_train, y_train,
+    
+history=model.fit(train, labels,
               batch_size=batch_size,
               epochs=epochs,
               validation_split=0.2,
@@ -59,7 +57,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('C:/Users/gerhard/Documents/hpc-mini/final/model25_history1.png', bbox_inches='tight')
+plt.savefig('/home/vljchr004/hpc-mini/chamber_gain_corrected/model25_3_history1.png', bbox_inches='tight')
 plt.close()
 
 
@@ -69,18 +67,39 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('C:/Users/gerhard/Documents/final/model25_history2.png', bbox_inches='tight')
+plt.savefig('/home/vljchr004/hpc-mini/chamber_gain_corrected/model25_3_history2.png', bbox_inches='tight')
 
 plt.close()
 
-model.probs = model.predict_proba(x_train)
+model.probs = model.predict_proba(train)
 
 import numpy as np
-np.savetxt("C:/Users/gerhard/Documents/hpc-mini/final/model25_results.csv", np.array(model.probs), fmt="%s")
+np.savetxt("/home/vljchr004/hpc-mini/chamber_gain_corrected/model25_3_results.csv", np.array(model.probs), fmt="%s")
 
-np.savetxt("C:/Users/gerhard/Documents/hpc-mini/final/model25_y_test.csv", np.array(y_train), fmt="%s")
-
-model.save('C:/Users/gerhard/Documents/hpc-mini/final/model25_.h5')  # creates a HDF5 file 'my_model.h5'
-del model
+np.savetxt("/home/vljchr004/hpc-mini/chamber_gain_corrected/model25_3_y_test.csv", np.array(labels), fmt="%s")
+print("saving model")
+model.save('/home/vljchr004/hpc-mini/chamber_gain_corrected/model25_3.h5')  # creates a HDF5 file 'my_model.h5'
+print("model saved")
 
 print("<-----------------------------done------------------------------------------>")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
