@@ -20,6 +20,7 @@ import tensorflow as tf
 model = tf.keras.Sequential()
 model.add(tf.keras.layers.Conv2D(filters=16,kernel_size=(3,3),strides=1, padding='valid',activation="relu"))
 model.add(tf.keras.layers.MaxPool2D())
+
 model.add(tf.keras.layers.Conv2D(filters=32,kernel_size=(3,3),strides=1, padding='valid',activation="relu"))
 model.add(tf.keras.layers.MaxPool2D())
 model.add(tf.keras.layers.Conv2D(filters=64,kernel_size=(2,2),strides=1, padding='valid',activation="relu"))
@@ -37,7 +38,7 @@ model.compile(loss='binary_crossentropy',
 
 batch_size=32
 
-epochs=50
+epochs=100
 
 history=model.fit(x_train, y_train,
               batch_size=batch_size,
