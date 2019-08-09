@@ -45,4 +45,4 @@ module load software/TensorFlow-CPU-py3
 # Your science stuff goes here...
 
 
-python -u /home/vljchr004/hpc-mini/merged-models/merging3.py > out_model3.txt
+python -u /home/vljchr004/hpc-mini/merged-models/merging2.py > out_model2.txt

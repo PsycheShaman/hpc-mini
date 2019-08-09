@@ -124,6 +124,8 @@ model.compile(optimizer=Adam(lr=0.0000001),loss='binary_crossentropy',metrics=['
 
 history=model.fit([X_train,LSTM_X_train,collapse_X_train,flatten_X_train],y_train,epochs=100,batch_size=32,validation_split=0.25,shuffle=True)
 
+import matplotlib.pyplot as plt
+
 plt.plot(history.history['acc'])
 plt.plot(history.history['val_acc'])
 plt.title('model accuracy')

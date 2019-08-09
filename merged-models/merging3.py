@@ -11,6 +11,8 @@ from tensorflow import keras
 
 import numpy as np
 
+import matplotlib.pyplot as plt
+
 def load_data():
         tracks = np.load("/scratch/vljchr004/6_tracklets_large_calib_train/0_tracks.npy")
 
